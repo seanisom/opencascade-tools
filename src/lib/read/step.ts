@@ -1,15 +1,9 @@
-import { readFileSync } from "fs"
 import { Handle_TDocStd_Document, OpenCascadeInstance } from "opencascade.js/dist/opencascade.full.js"
 
 const NAME = "file.stp"
 const BASE = "."
 const PATH = `${BASE}/${NAME}`
 
-export function readStepFile(oc: OpenCascadeInstance, path: string, docHandle: Handle_TDocStd_Document = null) {
-    const data = readFileSync(path, "ascii")
-
-    return readStepData(oc, data, docHandle)   
-}
 
 export function readStepData(oc: OpenCascadeInstance, data: string, docHandle: Handle_TDocStd_Document = null) {
     console.log("> Reading STEP")

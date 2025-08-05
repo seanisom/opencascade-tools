@@ -1,14 +1,5 @@
-import { writeFileSync } from "fs"
-import { basename } from "path"
 import { Handle_TDocStd_Document, OpenCascadeInstance } from "opencascade.js/dist/opencascade.full.js"
 
-export function writeGlbFile(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Document, path: string) {
-    const pathInternal = `./${basename(path)}`
-    
-    const data = writeGlbInternal(oc, docHandle, pathInternal)
-
-    data && writeFileSync(path, data)
-}
 
 export function writeGlbData(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Document, path: string = "./output.glb") {
     return writeGlbInternal(oc, docHandle, path)

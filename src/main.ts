@@ -6,8 +6,9 @@ import { readFileSync } from 'fs'
 import { Handle_TDocStd_Document, OpenCascadeInstance } from 'opencascade.js/dist/opencascade.full'
 import { basename, dirname, extname, resolve } from "path"
 import { fileURLToPath } from 'url'
-import { init, readIgesFile, readStepFile, triangulate, writeGlbFile, writeGltfFile, writeObjFile } from './api/node.js'
+import { /*readIgesFile, readStepFile,*/ triangulate } from './api/node.js'
 import { print } from './lib/tree.js'
+import initOpenCascade from 'opencascade.js/dist/node.js'
 
 const packPath = resolve(dirname(fileURLToPath(import.meta.url)), "..", "package.json")
 const packData = readFileSync(packPath, 'utf-8')
@@ -28,9 +29,9 @@ interface Options {
 function selectReadFile(inputPath: string) {
     const inputExt = extname(inputPath)
     if (inputExt == ".iges") {
-        return readIgesFile
+        //return readIgesFile
     } else if (inputExt == ".stp" || inputExt == ".step") {
-        return readStepFile
+        //return readStepFile
     } else {
         throw "Input file format is not supported!"
     }
@@ -49,16 +50,7 @@ function selectOutputPath(inputPath: string, format: string) {
 }
 
 function selectWriteFile(outputPath: string) {
-    const outputExt = extname(outputPath)
-    if (outputExt == ".obj") {
-        return writeObjFile
-    } else if (outputExt == ".gltf") {
-        return writeGltfFile
-    } else if (outputExt == ".glb") {
-        return writeGlbFile
-    } else {
-        throw "Output file format is not supported!"
-    }
+    throw "Output file format is not supported!"
 }
 
 function processDocument(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Document, linDeflection: number, isRelative: boolean, angDeflection: number, isInParallel: boolean, outputPath: string) {
@@ -68,13 +60,13 @@ function processDocument(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Docu
 
     const writeOutputFile = selectWriteFile(outputPath)
 
-    writeOutputFile(oc, docHandle, outputPath)
+    //writeOutputFile(oc, docHandle, outputPath)
 }
 
 async function run({format, linDeflection, isRelative, angDeflection, isInParallel, input, output}: Options) {
     // Load WebAssembly
 
-    const oc = await init()
+    const oc = await initOpenCascade();
 
     // Process input files
 
@@ -87,7 +79,7 @@ async function run({format, linDeflection, isRelative, angDeflection, isInParall
     
         console.info(`Processing input file`, inputPath)
 
-        docHandle = readInputFile(oc, inputPath, docHandle)
+        //docHandle = readInputFile(oc, inputPath, docHandle)
         
         // Print, triangulate and write output files
         
