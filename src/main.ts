@@ -62,13 +62,15 @@ function selectWriteFile(outputPath: string) {
 }
 
 function processDocument(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Document, linDeflection: number, isRelative: boolean, angDeflection: number, isInParallel: boolean, outputPath: string) {
-    print(oc, docHandle.get())
-
     triangulate(oc, docHandle.get(), linDeflection, isRelative, angDeflection, isInParallel)
 
-    const writeOutputFile = selectWriteFile(outputPath)
+    print(oc, docHandle.get())
 
-    writeOutputFile(oc, docHandle, outputPath)
+    if (outputPath && outputPath != "") {
+        const writeOutputFile = selectWriteFile(outputPath)
+
+        writeOutputFile(oc, docHandle, outputPath)
+    }
 }
 
 async function run({format, linDeflection, isRelative, angDeflection, isInParallel, input, output}: Options) {
@@ -85,39 +87,36 @@ async function run({format, linDeflection, isRelative, angDeflection, isInParall
     
         const readInputFile = selectReadFile(inputPath)
     
-        console.info(`Processing input file`, inputPath)
+        console.debug(`Processing input file`, inputPath)
 
         docHandle = readInputFile(oc, inputPath, docHandle)
         
         // Print, triangulate and write output files
         
-        if (!output) {
-            const outputPath = selectOutputPath(inputPath, format)
+        //if (!output) {
+            //const outputPath = selectOutputPath(inputPath, format)
 
-            processDocument(oc, docHandle, parseFloat(linDeflection), isRelative, parseFloat(angDeflection), isInParallel, outputPath)
+            //processDocument(oc, docHandle, parseFloat(linDeflection), isRelative, parseFloat(angDeflection), isInParallel, "")
 
-            docHandle = null
-        }
+            //docHandle = null
+        //}
     }
         
     // Print, triangulate and write output file
-
-    if (output) {
-        processDocument(oc, docHandle, parseFloat(linDeflection), isRelative, parseFloat(angDeflection), isInParallel, output)
-    }
+    processDocument(oc, docHandle, parseFloat(linDeflection), isRelative, parseFloat(angDeflection), isInParallel, output)
 }
 
-figlet(name, (error, result) => {
-    if (error) {
-        console.error(error)
-    } else {
-        console.log(result)
-    }
-    console.log()
+//figlet(name, (error, result) => {
+    // if (error) {
+    //     console.error(error)
+    // } else {
+    //     console.log(result)
+    // }
+    // console.log()
 
-    program.name(name)
+    //program.name(name)
     program.version(version)
-    program.description(description)
+    //program.description(description)
     
     program.option("-d, --debug", "debug flag", false)
     program.option("-l, --linDeflection <number>", "linear deflection value for triangulation algorithm", "0.1")
@@ -135,4 +134,4 @@ figlet(name, (error, result) => {
     console.debug = options.debug ? console.debug : () => {}
     
     run(options)
-})
+//})

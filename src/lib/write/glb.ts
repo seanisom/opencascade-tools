@@ -15,7 +15,7 @@ export function writeGlbData(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_
 }
 
 function writeGlbInternal(oc: OpenCascadeInstance, docHandle: Handle_TDocStd_Document, path: string) {
-    console.log("> Writing GLB")
+    console.debug("> Writing GLB")
 
     console.debug("  > Creating map")
     const map = new oc.TColStd_IndexedDataMapOfStringString_1()

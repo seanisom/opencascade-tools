@@ -1,7 +1,7 @@
 import initOpenCascade from 'opencascade.js/dist/index.js'
 
 export async function init() {
-    console.log("Initializing WebAssembly version of OpenCascade")
+    console.debug("Initializing WebAssembly version of OpenCascade")
 
     const start = Date.now()
 
@@ -9,7 +9,7 @@ export async function init() {
 
     const end = Date.now()
 
-    console.log(`WebAssembly version of OpenCascade initialized successfully in ${end - start} ms`)
+    console.debug(`WebAssembly version of OpenCascade initialized successfully in ${end - start} ms`)
 
     return oc
 }

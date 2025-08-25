@@ -12,7 +12,7 @@ export function readStepFile(oc: OpenCascadeInstance, path: string, docHandle: H
 }
 
 export function readStepData(oc: OpenCascadeInstance, data: string, docHandle: Handle_TDocStd_Document = null) {
-    console.log("> Reading STEP")
+    console.debug("> Reading STEP")
 
     console.debug("  > Creating reader")
     const reader = new oc.STEPCAFControl_Reader_1()
